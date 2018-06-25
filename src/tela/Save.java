@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -23,7 +22,7 @@ public class Save {
 	private JTextField txfSenhaEmail;
 	private JTextField txfUrlLug;
 
-	public static void main(String[] args) {
+	public void OpenSave() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -46,7 +45,7 @@ public class Save {
 		frmSave.setTitle("PassOvoWord - Save");
 		frmSave.setIconImage(Toolkit.getDefaultToolkit().getImage(Save.class.getResource("/img/yoshi.png")));
 		frmSave.setBounds(100, 100, 690, 260);
-		frmSave.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSave.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmSave.getContentPane().setLayout(null);
 		
 		JLabel lblLoginLug = new JLabel("Login LevelUp");
@@ -137,10 +136,10 @@ public class Save {
 					if (bol)
 						JOptionPane.showMessageDialog(null, "Conta cadastrada.");
 					else
-						JOptionPane.showMessageDialog(null, "Conta já está cadastrada.");
+						JOptionPane.showMessageDialog(null, "Conta já está cadastrada");
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "Preencha todos os campos.");
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
 				}
 			}
 		});

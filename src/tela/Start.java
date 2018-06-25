@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import codigo.Json;
@@ -22,7 +23,7 @@ public class Start {
 	private JTable table;
 	private JButton btnStart;
 
-	public static void main(String[] args) {
+	public void OpenStart() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -43,9 +44,9 @@ public class Start {
 		frmStart = new JFrame();
 		frmStart.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		frmStart.setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/img/yoshi.png")));
-		frmStart.setTitle("PassOvoWord - Edit");
+		frmStart.setTitle("PassOvoWord - Reset");
 		frmStart.setBounds(100, 100, 800, 500);
-		frmStart.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmStart.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmStart.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
 		String[] columnNames = {"Login LUG", "Senha LUG", "Login Rag", "Senha Rag", "Login Email", "Senha Email", "Url LUG"};
@@ -62,6 +63,7 @@ public class Start {
 		    }
 		};
 		table.setFont(new Font("Arial", Font.PLAIN, 12));
+		table.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(table);
 		frmStart.getContentPane().add(scrollPane);
@@ -70,16 +72,23 @@ public class Start {
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				for (int row : table.getSelectedRows()) {
-					String loginLug = table.getValueAt(row, 0).toString();
-					String senhaLug = table.getValueAt(row, 1).toString();
-					String loginRag = table.getValueAt(row, 2).toString();
-					String senhaRag = table.getValueAt(row, 3).toString();
-					String loginEmail = table.getValueAt(row, 4).toString();
-					String senhaEmail = table.getValueAt(row, 5).toString();
-					String urlLug = table.getValueAt(row, 6).toString();
+					String loginLug = table.getValueAt(row, table.getColumn("Login LUG").getModelIndex()).toString();
+					String senhaLug = table.getValueAt(row, table.getColumn("Senha LUG").getModelIndex()).toString();
+					String loginRag = table.getValueAt(row, table.getColumn("Login Rag").getModelIndex()).toString();
+					String senhaRag = table.getValueAt(row, table.getColumn("Senha Rag").getModelIndex()).toString();
+					String loginEmail = table.getValueAt(row, table.getColumn("Login Email").getModelIndex()).toString();
+					String senhaEmail = table.getValueAt(row, table.getColumn("Senha Email").getModelIndex()).toString();
+					String urlLug = table.getValueAt(row, table.getColumn("Url LUG").getModelIndex()).toString();
 					
-					new Reset().reset(loginLug, senhaLug, loginRag, senhaRag, loginEmail, senhaEmail, urlLug);
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							new Reset().reset(loginLug, senhaLug, loginRag, senhaRag, loginEmail, senhaEmail, urlLug);			
+						}
+					}).start();
 				}
+				if (table.getSelectedRowCount() != 0)
+					JOptionPane.showMessageDialog(null, "Requisições enviadas");
 			}
 		});
 		scrollPane.setRowHeaderView(btnStart);
@@ -92,7 +101,7 @@ public class Start {
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			String nome = table.getColumnName(i);
 			int max = fm.stringWidth(nome);
-			for (int j = 0; j < obj[i].length; j++) {
+			for (int j = 0; j < table.getRowCount(); j++) {
 				if (max < fm.stringWidth(obj[j][i].toString()))
 					max = fm.stringWidth(obj[j][i].toString());
 			}

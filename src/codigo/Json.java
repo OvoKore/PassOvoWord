@@ -1,27 +1,26 @@
 package codigo;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.JOptionPane;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import net.sourceforge.htmlunit.corejs.javascript.json.JsonParser;
-
 public class Json {
 	
-	JSONObject json = new JSONObject();
-	JSONArray list = new JSONArray();
-	JSONParser parser = new JSONParser();
+	private JSONObject json = new JSONObject();
+	private JSONArray list = new JSONArray();
+	private JSONParser parser = new JSONParser();
+	public static final String arquivo = "passOvoWord.json";
 	
 	public boolean Save(String loginLug, String SenhaLug, String loginRag, String senhaRag, 
 			String loginEmail, String senhaEmail, String urlLug) {
 		
-		if (new File("json.json").exists())
+		if (new File(arquivo).exists())
 			list = ReadJson();
 	
 		json.put("loginLug", loginLug);
@@ -40,7 +39,7 @@ public class Json {
 		list.add(json);
 		
 		try {
-			FileWriter write = new FileWriter("json.json");
+			FileWriter write = new FileWriter(arquivo);
 			write.write(list.toString());
 			write.close();
 		} catch (IOException e) {
@@ -49,24 +48,59 @@ public class Json {
 		return true;
 	}
 	
-	public JSONArray ReadJson() {
+	public void Edit(Object[][] obj) {
+		for (int row = 0; row < obj.length; row++) {
+			json = new JSONObject();
+			
+			json.put("loginLug", obj[row][0]);
+			json.put("senhaLug", obj[row][1]);
+			json.put("loginRag", obj[row][2]);
+			json.put("senhaRag", obj[row][3]);
+			json.put("loginEmail", obj[row][4]);
+			json.put("senhaEmail", obj[row][5]);
+			json.put("urlLug", obj[row][6]);
+			
+			list.add(json);
+		}
+		
 		try {
-			FileReader read = new FileReader("json.json");
-			try {
-				return (JSONArray) new JSONParser().parse(read);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}	
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			FileWriter write = new FileWriter(arquivo);
+			write.write(list.toString());
+			write.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void Delete(int[] rows) {
+		if (new File(arquivo).exists())
+			list = ReadJson();
+
+		for (int i = rows.length - 1; i >= 0 ; i--) {
+			list.remove(rows[i]);
+		}
+		
+		try {
+			FileWriter write = new FileWriter(arquivo);
+			write.write(list.toString());
+			write.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public JSONArray ReadJson() {
+		try {
+			FileReader read = new FileReader(arquivo);
+			return (JSONArray) parser.parse(read);
+		} catch (IOException | ParseException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao ler PassOvoWord.json");
 		}
 		return null;
 	}
 	
 	public Object[][] ReadObj() {
-		if (new File("json.json").exists())
+		if (new File(arquivo).exists())
 			list = ReadJson();
 		
 		Object[][] contas = new Object[list.size()][7];
