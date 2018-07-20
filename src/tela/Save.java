@@ -131,8 +131,8 @@ public class Save {
 				if (!txfLoginLuG.getText().isEmpty() && !txfSenhaEmail.getText().isEmpty() && !txfLoginRag.getText().isEmpty() && 
 				!txfSenhaRag.getText().isEmpty() && !txfLoginLuG.getText().isEmpty() && !txfSenhaLug.getText().isEmpty() && !txfUrlLug.getText().isEmpty()) {
 					
-					boolean bol = new codigo.Json().Save(txfLoginLuG.getText(), txfSenhaEmail.getText(), txfLoginRag.getText(), 
-							txfSenhaRag.getText(), txfLoginLuG.getText(), txfSenhaLug.getText(), txfUrlLug.getText());
+					boolean bol = new codigo.Json().Save(txfLoginLuG.getText(), txfSenhaLug.getText(), txfLoginRag.getText(), txfSenhaRag.getText(), 
+							txfLoginLuG.getText(), txfSenhaEmail.getText(), txfUrlLug.getText());
 					if (bol)
 						JOptionPane.showMessageDialog(null, "Conta cadastrada.");
 					else

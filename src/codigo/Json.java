@@ -17,14 +17,14 @@ public class Json {
 	private JSONParser parser = new JSONParser();
 	public static final String arquivo = "passOvoWord.json";
 	
-	public boolean Save(String loginLug, String SenhaLug, String loginRag, String senhaRag, 
+	public boolean Save(String loginLug, String senhaLug, String loginRag, String senhaRag, 
 			String loginEmail, String senhaEmail, String urlLug) {
 		
 		if (new File(arquivo).exists())
 			list = ReadJson();
-	
+		
 		json.put("loginLug", loginLug);
-		json.put("senhaLug", SenhaLug);
+		json.put("senhaLug", senhaLug);
 		json.put("loginRag", loginRag);
 		json.put("senhaRag", senhaRag);
 		json.put("loginEmail", loginEmail);
