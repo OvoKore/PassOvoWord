@@ -128,11 +128,11 @@ public class Save {
 		JButton btnSave = new JButton("Contemple o ovo!");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg) {
-				if (!txfLoginLuG.getText().isEmpty() && !txfSenhaEmail.getText().isEmpty() && !txfLoginRag.getText().isEmpty() && 
-				!txfSenhaRag.getText().isEmpty() && !txfLoginLuG.getText().isEmpty() && !txfSenhaLug.getText().isEmpty() && !txfUrlLug.getText().isEmpty()) {
+				if (!txfLoginLuG.getText().isEmpty() && !txfSenhaLug.getText().isEmpty() && !txfLoginRag.getText().isEmpty() && !txfSenhaRag.getText().isEmpty()
+				 && !txfLoginEmail.getText().isEmpty() && !txfSenhaEmail.getText().isEmpty() && !txfUrlLug.getText().isEmpty()) {
 					
 					boolean bol = new codigo.Json().Save(txfLoginLuG.getText(), txfSenhaLug.getText(), txfLoginRag.getText(), txfSenhaRag.getText(), 
-							txfLoginLuG.getText(), txfSenhaEmail.getText(), txfUrlLug.getText());
+							txfLoginEmail.getText(), txfSenhaEmail.getText(), txfUrlLug.getText());
 					if (bol)
 						JOptionPane.showMessageDialog(null, "Conta cadastrada.");
 					else
