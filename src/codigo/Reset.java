@@ -114,7 +114,7 @@ public class Reset {
 
 		if (url != null) {
 			try {
-				FileWriter atalho = new FileWriter(loginLug + " - " + senhaLug + " - " + senhaRag + ".url");
+				FileWriter atalho = new FileWriter(loginLug + " - " + senhaLug + " | " + loginRag + " - " + senhaRag + ".url");
 				atalho.write("[InternetShortcut]\nURL=" + url + "\nIDList=\nHotKey=0\n");
 				atalho.close();
 			} catch (IOException e) {
